@@ -1,0 +1,31 @@
+import { getCustomRepository } from "typeorm"
+
+import { SettingsRepository } from "../repositories/SettingsRepository"
+
+interface ICreateSetting {
+  username: string
+  chat: boolean
+}
+
+export class SettingService {
+  constructor (
+    private settingsRepository = getCustomRepository(SettingsRepository)
+  ) {}
+
+  async create({ chat, username }: ICreateSetting) {
+    const userAlreadyExists = this.settingsRepository.findOne({ username })
+
+    if (userAlreadyExists) {
+      throw new Error('User already exists.')
+    }
+
+    const setting = this.settingsRepository.create({
+      username,
+      chat
+    })
+
+    await this.settingsRepository.save(setting)
+
+    return setting
+  }
+}
