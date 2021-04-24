@@ -14,7 +14,7 @@ export class SettingService {
   ) {}
 
   async create({ chat, username }: ICreateSetting) {
-    const userAlreadyExists = this.settingsRepository.findOne({ username })
+    const userAlreadyExists = await this.settingsRepository.findOne({ username })
 
     if (userAlreadyExists) {
       throw new Error('User already exists.')

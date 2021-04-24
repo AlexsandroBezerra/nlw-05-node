@@ -21,6 +21,7 @@ app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 
 app.get("/client", (request, response) => response.render('html/client.html'))
+app.get("/admin", (request, response) => response.render('html/admin.html'))
 
 app.use(express.json())
 app.use(routes)
